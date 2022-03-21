@@ -1,7 +1,6 @@
 //mongoose permet de créer des collections facilement directement depuis nodejs, pour cela on importe le package mongoose
 const mongoose = require('mongoose'); 
-const Departure = require("./departure");
-const Arrival = require("./arrival");
+
 
 
 //Un model est considéré comme une collection mongodb (collection events avec plusieur event)
