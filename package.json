@@ -1,0 +1,25 @@
+{
+  "name": "aerodatabox_robot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "devStart": "nodemon app.js",
+    "start": "node robot.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "mongodb": "^4.4.1",
+    "mongoose": "^6.2.7",
+    "node": "^17.7.1",
+    "node-cron": "^3.0.0",
+    "nodemon": "^2.0.15",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "lite-server": "^2.6.1"
+  }
+}
