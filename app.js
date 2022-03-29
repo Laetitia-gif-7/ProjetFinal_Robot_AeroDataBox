@@ -2,7 +2,7 @@ const express = require('express')
 const https = require('https')
 const app = express()
 const request = require('request')
-const PORT = process.env.PORT || 3000;
+const PORT = 3005;
 const mongoose = require('mongoose')
 const cron = require('node-cron')
 const cors = require('cors');
@@ -11,11 +11,13 @@ const url= process.env.URL_MONGO || urlocal;
 var MongoClient = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
 const Flight = require("./flight");
+//const { BulkOperationBase } = require('mongodb');
+    
 
 
-const options = {
+var options = {
     method: 'GET',
-    url: 'https://aerodatabox.p.rapidapi.com/flights/number/to3478/',
+    url: `https://aerodatabox.p.rapidapi.com/flights/number/`,
     headers: {
       'x-rapidapi-host': 'aerodatabox.p.rapidapi.com',
       'x-rapidapi-key': '23b9099b79msh277c86c75b82b22p1e0baajsn08a4c566898e',
@@ -23,13 +25,32 @@ const options = {
     }
   };
 
+ // il faut une "route" par exemple "/flightNbr/toXXXXX" => modifie l'objet options ppour mettre le numéro de vol
+
+
+
+ app.get("/flights/:flightNumber", (req, res) =>{
+
+    var flightNumber = req.params.flightNumber;
+
+    options.url = `https://aerodatabox.p.rapidapi.com/flights/number/${flightNumber}`
+    console.log(options.url);
+
+    getDataByFlightNumberAndDate();   
+    
+    return res.status(200).json({options});
+
+})
+
 //let options = {json: true};
 app.use(bodyParser.json());
 app.use(cors({origin: '*'}))
+
 app.get('/', (req, res) => { 
     res.send('Robot is running')
 });
-app.listen(process.env.PORT);
+
+app.listen(PORT);
 
 //connection à MongoDB
 mongoose.connect("mongodb+srv://laetitia:laetitia@aerodataboxproject4.ezdkr.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
@@ -42,7 +63,10 @@ mongoose.connect("mongodb+srv://laetitia:laetitia@aerodataboxproject4.ezdkr.mong
     });
 
 
+
+
     async function getDataByFlightNumberAndDate(){
+
     
         request(options, function (error, response, body) {
             console.log("je suis dans le request");
@@ -77,5 +101,5 @@ mongoose.connect("mongodb+srv://laetitia:laetitia@aerodataboxproject4.ezdkr.mong
 
 
            
-getDataByFlightNumberAndDate();    
+
         
